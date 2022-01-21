@@ -1,6 +1,6 @@
 ﻿using Shared.Logger;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class BaseTool<TParameters, TInput> : IBaseTool<TParameters, TInput>
     {

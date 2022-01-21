@@ -20,6 +20,6 @@ namespace TestTools.Helper.Interfaces
         /// <summary>
         /// 
         /// </summary>
-        ITestHelper AssertFiles();
+        ITestHelper Assert();
     }
 }

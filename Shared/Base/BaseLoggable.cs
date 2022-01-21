@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class BaseLoggable : ILoggable
     {

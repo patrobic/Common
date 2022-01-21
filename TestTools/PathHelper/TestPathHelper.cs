@@ -22,11 +22,11 @@ namespace TestTools.PathHelper
 
         public string FunctionName { get; set; }
 
-        public string SourcePath { get; set; }
+        public string InputPath { get; set; }
 
-        public string ResultPath { get; set; }
+        public string OutputPath { get; set; }
 
-        public string ReferencePath { get; set; }
+        public string ExpectedPath { get; set; }
 
         public TestPathHelper(
             string relativePath = "../../../../Data/TestData",
@@ -71,14 +71,14 @@ namespace TestTools.PathHelper
                 _ => throw new NotImplementedException(),
             };
 
-            SourcePath = Path.Combine(rootPath, sourcePath);
+            InputPath = Path.Combine(rootPath, sourcePath);
             if (path != null)
             {
-                SourcePath = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(Path.Combine(rootPath, sourcePath, path));
+                InputPath = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(Path.Combine(rootPath, sourcePath, path));
             }
 
-            ResultPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName);
-            ReferencePath = Path.Combine(rootPath, _expectedPath, _namespaceName, _className, FunctionName);
+            OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName);
+            ExpectedPath = Path.Combine(rootPath, _expectedPath, _namespaceName, _className, FunctionName);
         }
     }
 }

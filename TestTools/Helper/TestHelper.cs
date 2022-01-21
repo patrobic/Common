@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 using TestTools.Comparators;
 using TestTools.Helper.Interfaces;
 using TestTools.PathHelper;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace TestTools.Helper
@@ -31,13 +30,13 @@ namespace TestTools.Helper
             return this;
         }
 
-        public ITestHelper AssertFiles()
+        public ITestHelper Assert()
         {
             if (_errorLog.Length > 0)
             {
                 _output.WriteLine(_errorLog);
             }
-            Assert.True(_errorLog.Length == 0);
+            Xunit.Assert.True(_errorLog.Length == 0);
             return this;
         }
 
@@ -73,11 +72,11 @@ namespace TestTools.Helper
         {
             var fileName = (name == null) ? _pathHelper.FileName : (name.Contains('.') ? name : (_pathHelper.FunctionName + "." + name));
 
-            var resultPath = Path.Combine(_pathHelper.ResultPath, fileName);
+            var resultPath = Path.Combine(_pathHelper.OutputPath, fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(resultPath));
             File.WriteAllBytes(resultPath, resultFile);
 
-            var referencePath = Path.Combine(_pathHelper.ReferencePath, fileName);
+            var referencePath = Path.Combine(_pathHelper.ExpectedPath, fileName);
             if (!File.Exists(referencePath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(referencePath));
@@ -86,7 +85,7 @@ namespace TestTools.Helper
                 _errorLog += $"File {name} did not exist, created it in Reference (run test again).\n";
                 return this;
             }
-            var referenceFile = File.ReadAllBytes(Path.Combine(_pathHelper.ReferencePath, fileName));
+            var referenceFile = File.ReadAllBytes(Path.Combine(_pathHelper.ExpectedPath, fileName));
 
             var equal = _comparator.Compare(referenceFile, resultFile, _marginOfError, out float diffRatio);
             if (!equal)

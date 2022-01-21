@@ -2,7 +2,7 @@
 using Shared.ParameterManager;
 using System;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class BaseParameters : IParameters
     {

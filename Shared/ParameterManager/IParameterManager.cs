@@ -1,4 +1,6 @@
-﻿namespace Shared.ParameterManager
+﻿using Shared.Base;
+
+namespace Shared.ParameterManager
 {
     public interface IParameterManager
     {

@@ -1,7 +1,7 @@
-﻿namespace Framework
+﻿namespace Shared.Context
 {
     public interface IContextFactory
     {
-        public IDatabaseContext Create();
+        public BaseDatabaseContext Create();
     }
 }

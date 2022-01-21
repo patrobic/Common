@@ -1,8 +1,8 @@
-﻿using Framework;
+﻿using Shared.Context;
 using Shared.Logger;
 using Shared.ParameterManager;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class BaseModule<TParameters> : IBaseModule<TParameters>
     {

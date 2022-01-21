@@ -22,10 +22,10 @@ namespace TestTools.Base
         public BaseTest(ITestOutputHelper output)
         {
             _output = output;
-            _testHelper = new TestHelper(output);
+            _helper = new TestHelper(output);
         }
 
         protected ILogger _logger = new Logger();
-        protected ITestHelper _testHelper;
+        protected ITestHelper _helper;
     }
 }

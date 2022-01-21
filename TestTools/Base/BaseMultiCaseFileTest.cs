@@ -15,13 +15,13 @@ namespace TestTools.CaseHelper
         public void TestAssertFile(Parameters parameters, Input input, string expected)
         {
             var result = Run(parameters, input);
-            _testHelper.AssertByte(result, expected);
+            _helper.AssertByte(result, expected);
         }
 
         public void TestAssertFile((Parameters Parameters, Case Case) scenario)
         {
             var results = TestScenario(scenario);
-            _testHelper.AssertByte(results);
+            _helper.AssertByte(results);
         }
 
         public void TestAssertFile(List<(Parameters Parameters, Case Case)> scenarios)
@@ -32,7 +32,7 @@ namespace TestTools.CaseHelper
                 var result = TestScenario(scenario);
                 results.AddRange(result);
             }
-            _testHelper.AssertByte(results);
+            _helper.AssertByte(results);
         }
 
         protected abstract byte[] Run(Parameters parameters, Input input);

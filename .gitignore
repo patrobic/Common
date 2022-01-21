@@ -4,16 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Manually added
-*.pdf
-*.csv
-TestData/
-# Data/
-Exports/
-.local-chromium/
-Documents/
-/Publish/
-TestResults/
-CoverageReport/
 
 # User-specific files
 *.rsuser

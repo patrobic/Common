@@ -1,9 +1,9 @@
-﻿using Framework;
+﻿using Shared.Context;
 using Shared.Logger;
 using Shared.ParameterManager;
 using System;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class IBaseModule : BaseLoggable
     {

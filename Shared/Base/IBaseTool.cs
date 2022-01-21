@@ -1,7 +1,7 @@
 ﻿using Shared.Logger;
 using System;
 
-namespace Book.Base
+namespace Shared.Base
 {
     public abstract class IBaseTool<TParameters> : BaseLoggable
     {
