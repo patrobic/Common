@@ -1,7 +1,11 @@
-﻿namespace Shared.Context
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+namespace Shared.Context
 {
     public interface IContextFactory
     {
-        public BaseDatabaseContext Create();
+        public string ConnectionString { get; set; }
+
+        public IdentityDbContext Create();
     }
 }

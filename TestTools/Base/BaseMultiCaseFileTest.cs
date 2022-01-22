@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using TestTools.Base;
 using Xunit.Abstractions;
 
-namespace TestTools.CaseHelper
+namespace TestTools.Base
 {
     public abstract class BaseMultiCaseFileTest<Parameters, Case, Input> : BaseTest<Parameters>
         where Case : List<(Input Input, string Path)>

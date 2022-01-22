@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TestTools.Base;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TestTools.CaseHelper
+namespace TestTools.Base
 {
     public abstract class BaseMultiCaseTest<Parameters, Case, Input, Output> : BaseTest<Parameters>
         where Case : List<(Input, Output)>
