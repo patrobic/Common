@@ -7,8 +7,13 @@ namespace Shared.ParameterManager
 {
     public class ParameterManager : IParameterManager
     {
-        private ParameterManagerParameters _parameters = new();
+        private ParameterManagerParameters _parameters;
         private static object _lock = new();
+
+        public ParameterManager(ParameterManagerParameters parameters)
+        {
+            _parameters = parameters;
+        }
 
         public void GetParameters(IParameters parameters)
         {

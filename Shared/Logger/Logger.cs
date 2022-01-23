@@ -6,15 +6,14 @@ namespace Shared.Logger
 {
     public class Logger : ILogger, IDisposable
     {
-        private LoggerParameters _parameters = new();
-
-        private string _path;
-        private StreamWriter _fileWriter;
+        private LoggerParameters _parameters;
         private static object _lock = new();
+        private StreamWriter _fileWriter;
 
-        public Logger()
+        public Logger(LoggerParameters parameters)
         {
-            _path = Path.Combine(_parameters.LogPath, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt");
+            _parameters = parameters;
+            _parameters.LogPath = Path.Combine(_parameters.LogPath, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt");
         }
 
         public void Dispose()
@@ -151,12 +150,12 @@ namespace Shared.Logger
 
         private void CreateFile()
         {
-            if (_path != null && _fileWriter == null)
+            if (_parameters.LogPath != null && _fileWriter == null)
             {
                 try
                 {
-                    new FileInfo(_path).Directory.Create();
-                    _fileWriter = new StreamWriter(_path, true);
+                    new FileInfo(_parameters.LogPath).Directory.Create();
+                    _fileWriter = new StreamWriter(_parameters.LogPath, true);
                 }
                 catch { }
             }
