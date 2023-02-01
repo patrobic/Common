@@ -18,6 +18,7 @@ namespace TestTools.Helper
         protected float _marginOfError = 0.002f;
         private ITestOutputHelper _output;
         private string _errorLog = string.Empty;
+        private string _infoLog = string.Empty;
 
         public TestHelper(ITestOutputHelper output)
         {
@@ -27,11 +28,16 @@ namespace TestTools.Helper
         public ITestHelper Initialize(MethodBase caller)
         {
             _pathHelper.Initialize(caller);
+            SetPathInfo();
             return this;
         }
 
         public ITestHelper Assert()
         {
+            if (_infoLog.Length > 0)
+            {
+                _output.WriteLine(_infoLog);
+            }
             if (_errorLog.Length > 0)
             {
                 _output.WriteLine(_errorLog);
@@ -51,6 +57,7 @@ namespace TestTools.Helper
                 _comparator = comparator;
             }
             _pathHelper.Initialize(caller, fileLevel, path);
+            SetPathInfo();
             return this;
         }
 
@@ -65,7 +72,15 @@ namespace TestTools.Helper
                 _comparator = comparator;
             }
             _pathHelper.Initialize(caller);
+            SetPathInfo();
             return this;
+        }
+
+        private void SetPathInfo()
+        {
+            _infoLog += $"Source:    {_pathHelper.InputPath}\n";
+            _infoLog += $"Result:    {_pathHelper.OutputPath}\n";
+            _infoLog += $"Reference: {_pathHelper.ExpectedPath}\n";
         }
 
         public ITestHelper SetResult(byte[] resultFile, string name = null)

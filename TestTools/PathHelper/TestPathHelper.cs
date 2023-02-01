@@ -71,14 +71,14 @@ namespace TestTools.PathHelper
                 _ => throw new NotImplementedException(),
             };
 
-            InputPath = Path.Combine(rootPath, sourcePath);
+            InputPath = Path.Combine(rootPath, sourcePath).Replace('\\', '/');
             if (path != null)
             {
                 InputPath = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(Path.Combine(rootPath, sourcePath, path));
             }
 
-            OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName);
-            ExpectedPath = Path.Combine(rootPath, _expectedPath, _namespaceName, _className, FunctionName);
+            OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName).Replace('\\', '/');
+            ExpectedPath = Path.Combine(rootPath, _expectedPath, _namespaceName, _className, FunctionName).Replace('\\', '/');
         }
     }
 }
