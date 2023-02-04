@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -10,10 +11,11 @@ namespace Shared.Logger
         private static object _lock = new();
         private StreamWriter _fileWriter;
 
-        public Logger(LoggerParameters parameters)
+        public Logger(IConfiguration configuration, LoggerParameters parameters)
         {
             _parameters = parameters;
-            _parameters.LogPath = Path.Combine(_parameters.LogPath, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt");
+            if (configuration != null)
+                _parameters.LogPath = Path.Combine(configuration["ProjectsPath"], "Logs", $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt");
         }
 
         public void Dispose()

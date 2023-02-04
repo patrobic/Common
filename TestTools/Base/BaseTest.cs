@@ -25,7 +25,7 @@ namespace TestTools.Base
             _helper = new TestHelper(output);
         }
 
-        protected ILogger _logger = new Logger(new LoggerParameters());
+        protected ILogger _logger = new Logger(null, new LoggerParameters());
         protected ITestHelper _helper;
     }
 }

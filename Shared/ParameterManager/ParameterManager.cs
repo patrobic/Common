@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Shared.Base;
 using System.IO;
@@ -10,9 +11,10 @@ namespace Shared.ParameterManager
         private ParameterManagerParameters _parameters;
         private static object _lock = new();
 
-        public ParameterManager(ParameterManagerParameters parameters)
+        public ParameterManager(IConfiguration configuration, ParameterManagerParameters parameters)
         {
             _parameters = parameters;
+            _parameters.ParametersPath = Path.Combine(configuration["ProjectsPath"], "Parameters");
         }
 
         public void GetParameters(IParameters parameters)
