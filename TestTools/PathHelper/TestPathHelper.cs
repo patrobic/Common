@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Files;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,6 +29,8 @@ namespace TestTools.PathHelper
 
         public string ExpectedPath { get; set; }
 
+        public bool EnableDatedOutput { get; set; } = false;
+
         public TestPathHelper(
             string relativePath = "../../../../Data/TestData",
             string inputPath = "Source",
@@ -42,9 +45,24 @@ namespace TestTools.PathHelper
 
         public void Initialize(MethodBase caller, TestFileLevel fileLevel = TestFileLevel.Root, string path = null, NamespaceMode mode = NamespaceMode.Project)
         {
+            SetCallerName(caller);
+            SetNamespaceName(caller, mode);
+            SetFolderName();
+
+            var rootPath = Path.GetFullPath(_relativePath, Directory.GetCurrentDirectory());
+            SetInputPath(fileLevel, path, rootPath);
+            SetOutputPath(rootPath);
+            SetExpectedPath(rootPath);
+        }
+
+        private void SetCallerName(MethodBase caller)
+        {
             FunctionName = caller.Name;
             _className = caller.DeclaringType.Name;
+        }
 
+        private void SetNamespaceName(MethodBase caller, NamespaceMode mode)
+        {
             var split = caller.DeclaringType.Namespace.Split('.');
 
             _namespaceName = mode switch
@@ -54,14 +72,18 @@ namespace TestTools.PathHelper
                 NamespaceMode.Last => split.Last(),
                 _ => throw new NotImplementedException(),
             };
+        }
 
+        private static void SetFolderName()
+        {
             if (FolderName == null)
             {
                 FolderName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             }
+        }
 
-            var rootPath = Path.GetFullPath(_relativePath, Directory.GetCurrentDirectory());
-
+        private void SetInputPath(TestFileLevel fileLevel, string path, string rootPath)
+        {
             var sourcePath = fileLevel switch
             {
                 TestFileLevel.Test => Path.Combine(_inputPath, _namespaceName, _className, FunctionName),
@@ -76,8 +98,24 @@ namespace TestTools.PathHelper
             {
                 InputPath = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(Path.Combine(rootPath, sourcePath, path));
             }
+        }
 
-            OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName).Replace('\\', '/');
+        private void SetOutputPath(string rootPath)
+        {
+            if (EnableDatedOutput)
+            {
+                OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FolderName, FunctionName).Replace('\\', '/');
+            }
+            else
+            {
+                OutputPath = Path.Combine(rootPath, _outputPath, _namespaceName, _className, FunctionName).Replace('\\', '/');
+                FileTools.EmptyDirectory(OutputPath);
+            }
+            Directory.CreateDirectory(OutputPath);
+        }
+
+        private void SetExpectedPath(string rootPath)
+        {
             ExpectedPath = Path.Combine(rootPath, _expectedPath, _namespaceName, _className, FunctionName).Replace('\\', '/');
         }
     }

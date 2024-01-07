@@ -7,15 +7,19 @@ namespace Shared.Files
     {
         public static void EmptyDirectory(string path)
         {
-            var di = new DirectoryInfo(path);
-            foreach (var file in di.GetFiles())
+            try
             {
-                file.Delete();
+                var di = new DirectoryInfo(path);
+                foreach (var file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (var dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
             }
-            foreach (var dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
+            catch { }
         }
 
         public static void SaveFiles(IList<BaseOutputFile> files, string path)
